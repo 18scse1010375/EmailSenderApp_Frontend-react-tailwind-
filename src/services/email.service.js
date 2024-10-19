@@ -20,13 +20,15 @@ export async function  sendEmailWithFiles(formData){
     export async function  sendEmailWithoutFile(emailData){
 
         console.log("sendEmailWithoutFile method is callling...")
+
+        console.log("emailData----->"  , emailData ) ;     
         
     
         
     
         const result = (await customAxios.post(`/send`, emailData)).data;
     
-        console.log(result)
+        console.log("result--->" , result );
 
     }
 

@@ -85,7 +85,7 @@ function EmailSender() {
     
         console.log("Files are===>", files)
     
-        if (emailData.from === "" || emailData.to.length === 0 || emailData.subject === "" || editorRef.current.getContent() === "") {
+        if (emailData.from === "" || emailData.to.length === 0 || emailData.subject === "" ) {
             toast.error("Invalid Details..");
             return;
         }
@@ -97,8 +97,9 @@ function EmailSender() {
                 formData.append('request', new Blob([JSON.stringify({
                     from: emailData.from,
                     to: emailData.to,
-                    subject: emailData.subject,
-                    message: editorRef.current.getContent(),
+                    subject: emailData.subject, 
+                    message: "<h1>Hi,Arun </h1>"
+
                 })], { type: 'application/json' }));
     
                 if (files.length > 0) {
@@ -109,7 +110,6 @@ function EmailSender() {
                 } else {
                     await sendEmailWithoutFile(emailData);
                 }
-    
                 toast.success("Email sent successfully");
                 setEmailData({ from: "", to: [], subject: "", message: editorRef.current.setContent('') });
                 setFiles([]);
@@ -262,31 +262,27 @@ function EmailSender() {
                         <label for="message" class="block mb-3 text-sm font-medium text-gray-900 dark:text-white">Your Message  </label>
 
 
-
-
                         <Editor onEditorChange={(event) => {
+
+                            console.log("message---->" ,  editorRef.current.getContent()    )  
                             setEmailData({ ...emailData, 'message': editorRef.current.getContent() })
 
                         }}
 
                             onInit={(evt, editor) => {
                                 editorRef.current = editor
-                            }}
-                            apiKey='zsvni9aut9tqlsfnx2n5sfx4em5xrsx0nbcs0fojou0qiz6g'
 
-                            init={{
-                                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown',
-                                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-                                tinycomments_mode: 'embedded',
-                                tinycomments_author: 'Author name',
-                                mergetags_list: [
-                                    { value: 'First.Name', title: 'First Name' },
-                                    { value: 'Email', title: 'Email' },
-                                ],
-                                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
                             }}
-                            initialValue="Welcome to TinyMCE!"
-                        />
+                  apiKey='zsvni9aut9tqlsfnx2n5sfx4em5xrsx0nbcs0fojou0qiz6g'
+                init={{
+                    forced_root_block : false , 
+
+
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                      toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                      }}
+                   initialValue="Welcome to TinyMCE!"
+    />
 
                     </div>
 
